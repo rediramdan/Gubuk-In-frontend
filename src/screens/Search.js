@@ -23,7 +23,6 @@ import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
-import HeaderComponent from '../components/HeaderComponent';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -77,70 +76,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const Home = ({navigation}) => {
+const Search = ({navigation}) => {
   return (
     <Container>
-      <HeaderComponent navigation={navigation} title={'Gubuk-In'} icon={'bookmark-multiple'} />
-      <Content>
-        <View style={styles.banner}>
-          <Text style={styles.textBanner1}>Selamat datang</Text>
-          <Text style={styles.textBanner}>Redi ramdan</Text>
-          <Thumbnail
-            style={styles.avatarBanner}
-            source={require('../images/bg.png')}
-          />
-          <View style={{marginTop: 25}}>
-            <Item
-              style={{
-                backgroundColor: 'rgba(255,255,255,0.9)',
-                borderRadius: 5,
-                paddingHorizontal: 20,
-                height: 44,
-              }}
-              onPress={(e) => {
+      <Header style={styles.header} androidStatusBarColor={'#2469EF'}>
+        <Left>
+            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+                 <IconM name="arrow-left" size={24} color={'white'} />
+            </TouchableOpacity>
+        </Left>
+        <Body style={{marginLeft:-80}}>
+          <Item
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.9)',
+              borderRadius: 5,
+              paddingHorizontal: 20,
+              height: 40,
+              width: '100%',
+            }}>
+            <Input
+              autoFocus
+              onTouchStart={(e) => {
                 e.preventDefault();
                 navigation.navigate('Search');
-              }}>
-              <Input
-                disabled
-                style={{fontSize: 15}}
-                placeholder="Cari buku "
-                placeholderTextColor={'rgba(0,0,0,0.4)'}
-              />
-            </Item>
-          </View>
-        </View>
-        <View
-          style={{
-            marginTop: -15,
-            backgroundColor: 'white',
-            paddingTop: 15,
-            borderTopLeftRadius: 15,
-            borderTopRightRadius: 15,
-          }}>
-          <Text style={{marginLeft: 23, marginBottom: 10}}>Terbaru</Text>
-          <FlatList
-            style={{width: width, paddingHorizontal: 15}}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={[1, 2, 3, 4]}
-            renderItem={({item}) => (
-              <View
-                style={{
-                  width: 110,
-                  height: 160,
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  borderRadius: 5,
-                  marginRight: 15,
-                }}
-              />
-            )}
-            keyExtractor={(item) => item.toString()}
-          />
-        </View>
+              }}
+              style={{fontSize: 15}}
+              placeholder="Cari buku "
+              placeholderTextColor={'rgba(0,0,0,0.4)'}
+            />
+          </Item>
+        </Body>
+      </Header>
+      <Content>
         <View>
           <Tabs
-            style={{marginTop: 20}}
             tabBarUnderlineStyle={{backgroundColor: '#5E94FF'}}
             springFriction>
             <Tab
@@ -296,4 +265,4 @@ const Home = ({navigation}) => {
   );
 };
 
-export default Home;
+export default Search;

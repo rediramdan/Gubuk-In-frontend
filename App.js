@@ -8,6 +8,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Text} from 'react-native';
 
 import Home from './src/screens/Home';
+import Search from './src/screens/Search';
+import Beranda from './src/screens/Beranda';
+import BukuSaya from './src/screens/BukuSaya';
+import Profile from './src/screens/Profile';
+import Login from './src/screens/Login';
+import Register from './src/screens/Register';
 
 const Tab = createBottomTabNavigator();
 const {Navigator, Screen} = createStackNavigator();
@@ -34,8 +40,8 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="BukuSaya"
-        component={Home}
+        name="Beranda"
+        component={Beranda}
         options={{
           tabBarLabel: ({focused}) => {
             const color = focused ? '#5E94FF' : 'rgba(0,0,0,0.2)';
@@ -49,8 +55,8 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Home}
+        name="BukuSaya"
+        component={BukuSaya}
         options={{
           tabBarLabel: ({focused}) => {
             const color = focused ? '#5E94FF' : 'rgba(0,0,0,0.2)';
@@ -77,6 +83,10 @@ const App = () => {
         }}
         initialRouteName="Home">
         <Screen name="Home" component={BottomTab} />
+        <Screen name="Search" component={Search} />
+        <Screen name="Profile" component={Profile} />
+        <Screen name="Login" component={Login} />
+        <Screen name="Register" component={Register} />
       </Navigator>
     </NavigationContainer>
   );
