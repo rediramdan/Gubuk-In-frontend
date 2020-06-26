@@ -115,7 +115,7 @@ const BukuSaya = ({navigation}) => {
               </Left>
             </CardItem>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {navigation.navigate('ShowPdf')}}>
             <CardItem style={styles.carditem}>
               <Left style={styles.left}>
                 <Thumbnail
