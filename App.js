@@ -11,6 +11,7 @@ import Home from './src/screens/Home';
 import Search from './src/screens/Search';
 import Beranda from './src/screens/Beranda';
 import BukuSaya from './src/screens/BukuSaya';
+import Koleksi from './src/screens/Koleksi';
 import Profile from './src/screens/Profile';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
@@ -55,6 +56,21 @@ const BottomTab = () => {
           tabBarIcon: ({focused}) => {
             const color = focused ? '#5E94FF' : 'rgba(0,0,0,0.2)';
             return <Icon style={{color: color, fontSize: 25}} name="book-open" />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Koleksi"
+        component={Koleksi}
+        options={{
+          tabBarLabel: ({focused}) => {
+            const color = focused ? '#5E94FF' : 'rgba(0,0,0,0.2)';
+            const size = 10;
+            return <Text style={{color: color, fontSize: size}}>Koleksi</Text>;
+          },
+          tabBarIcon: ({focused}) => {
+            const color = focused ? '#5E94FF' : 'rgba(0,0,0,0.2)';
+            return <Icon style={{color: color, fontSize: 25}} name="book-multiple" />;
           },
         }}
       />
