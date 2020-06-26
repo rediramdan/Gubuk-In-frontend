@@ -20,6 +20,10 @@ import Register from './src/screens/Register';
 import Splash from './src/screens/Splash';
 import Landing from './src/screens/Landing';
 import ShowPdf from './src/screens/ShowPdf';
+import Verify from './src/screens/Verify';
+import VerifyEmail from './src/screens/VerifyEmail';
+import ChangePassword from './src/screens/ChangePassword';
+import ChangeProfile from './src/screens/ChangeProfile';
 
 
 const Tab = createBottomTabNavigator();
@@ -103,7 +107,7 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Splash">
+        initialRouteName="Verify">
         <Screen name="Splash" component={Splash} />
         <Screen name="ShowPdf" component={ShowPdf} />
         <Screen name="AddBook" component={AddBook} />
@@ -114,6 +118,10 @@ const App = () => {
         <Screen name="Login" component={Login} />
         <Screen name="Register" component={Register} />
         <Screen name="AddImage" component={AddImage} />
+        <Screen name="Verify" component={Verify} />
+        <Screen name="VerifyEmail" component={VerifyEmail} />
+        <Screen name="ChangePassword" component={ChangePassword} />
+        <Screen name="ChangeProfile" component={ChangeProfile} />
       </Navigator>
     </NavigationContainer>
   );
