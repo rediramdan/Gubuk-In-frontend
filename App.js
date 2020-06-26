@@ -14,6 +14,10 @@ import BukuSaya from './src/screens/BukuSaya';
 import Profile from './src/screens/Profile';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
+import Splash from './src/screens/Splash';
+import Landing from './src/screens/Landing';
+import ShowPdf from './src/screens/ShowPdf';
+
 
 const Tab = createBottomTabNavigator();
 const {Navigator, Screen} = createStackNavigator();
@@ -81,7 +85,10 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Home">
+        initialRouteName="ShowPdf">
+        <Screen name="Splash" component={Splash} />
+        <Screen name="ShowPdf" component={ShowPdf} />
+        <Screen name="Landing" component={Landing} />
         <Screen name="Home" component={BottomTab} />
         <Screen name="Search" component={Search} />
         <Screen name="Profile" component={Profile} />
