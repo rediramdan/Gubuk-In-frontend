@@ -15,6 +15,7 @@ import {
   Title,
   CardItem,
   Item,
+  Fab,
   Tabs,
   Tab,
   ScrollableTab,
@@ -58,9 +59,9 @@ const styles = StyleSheet.create({
   avatarBanner: {
     position: 'absolute',
     top: -10,
-    right: -15,
-    height: 130,
-    width: 205,
+    right: 10,
+    height: 135,
+    width: 135,
     borderRadius: 0,
   },
   carditem: {
@@ -93,22 +94,28 @@ const BukuSaya = ({navigation}) => {
           <View style={{marginTop: 5}}>
             <Thumbnail
               style={styles.avatarBanner}
-              source={require('../images/bg.png')}
+              source={require('../images/gubuk3a.png')}
             />
             <View style={{marginTop: 0}}>
               <Text style={{fontWeight: 'bold', color: 'white', fontSize: 17}}>
                 Buku Terjual
               </Text>
-              <Text style={{color: 'rgba(255,255,255,0.7)', fontSize: 16}}>
+              <Text style={{color: 'rgba(255,255,255,0.7)', fontSize: 22}}>
                 25
               </Text>
             </View>
-            <View style={{width: 130, marginTop:15}}>
-              <Text style={{color: 'white', fontSize: 16, marginBottom: 5}}>
-                Storage 
+            <View style={{width: 130, marginTop: 8}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 16,
+                  marginBottom: 5,
+                  fontWeight: 'bold',
+                }}>
+                Storage
               </Text>
-              <Text style={{fontSize: 10, color: 'white'}}>0,9 MB / 10MB</Text>
-              <Progress.Bar progress={0.5} width={120} />
+              <Text style={{fontSize: 10, color: 'white', marginBottom:2}}>0,9 MB / 10MB</Text>
+              <Progress.Bar progress={0.5} width={120} color="white" />
             </View>
           </View>
         </View>
@@ -119,9 +126,135 @@ const BukuSaya = ({navigation}) => {
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15,
           }}>
+          <View style={{height:10}}>
+              <View
+                style={{
+                  width: 70,
+                  height: 70,
+                  borderRadius: 50,
+                  backgroundColor: '#2469EF',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  right: 20,
+                  top: -35,
+                  shadowColor: 'black',
+                  shadowOffset: {
+                    width: 9,
+                    height: 20,
+                  },
+                  shadowOpacity: 1,
+                  shadowRadius: 0.14,
+                  elevation: 12,
+                }}>
+                <TouchableOpacity onPress={()=>{navigation.navigate('AddBook')}}>
+                <Icon name="add" style={{color: 'white'}} />
+            </TouchableOpacity>
+              </View>
+          </View>
           <List>
-            <ListItem itemHeader style={{marginBottom: -25, marginTop: 20}}>
+            <ListItem itemHeader style={{marginBottom: -25, marginTop: 0}}>
               <Text>BUKU SAYA</Text>
+            </ListItem>
+            <ListItem thumbnail>
+              <Left>
+                <Thumbnail
+                  style={{width: 45, borderRadius: 3}}
+                  square
+                  source={{uri: 'https://placeimg.com/140/140/any'}}
+                />
+              </Left>
+              <Body>
+                <Text>Buku pengetahuan</Text>
+                <Text note numberOfLines={1}>
+                  25 terjual
+                </Text>
+              </Body>
+              <Right>
+                <Button transparent>
+                  <Text>Detail</Text>
+                </Button>
+              </Right>
+            </ListItem>
+            <ListItem thumbnail>
+              <Left>
+                <Thumbnail
+                  style={{width: 45, borderRadius: 3}}
+                  square
+                  source={{uri: 'https://placeimg.com/140/140/any'}}
+                />
+              </Left>
+              <Body>
+                <Text>Buku pengetahuan</Text>
+                <Text note numberOfLines={1}>
+                  25 terjual
+                </Text>
+              </Body>
+              <Right>
+                <Button transparent>
+                  <Text>Detail</Text>
+                </Button>
+              </Right>
+            </ListItem>
+            <ListItem thumbnail>
+              <Left>
+                <Thumbnail
+                  style={{width: 45, borderRadius: 3}}
+                  square
+                  source={{uri: 'https://placeimg.com/140/140/any'}}
+                />
+              </Left>
+              <Body>
+                <Text>Buku pengetahuan</Text>
+                <Text note numberOfLines={1}>
+                  25 terjual
+                </Text>
+              </Body>
+              <Right>
+                <Button transparent>
+                  <Text>Detail</Text>
+                </Button>
+              </Right>
+            </ListItem>
+            <ListItem thumbnail>
+              <Left>
+                <Thumbnail
+                  style={{width: 45, borderRadius: 3}}
+                  square
+                  source={{uri: 'https://placeimg.com/140/140/any'}}
+                />
+              </Left>
+              <Body>
+                <Text>Buku pengetahuan</Text>
+                <Text note numberOfLines={1}>
+                  25 terjual
+                </Text>
+              </Body>
+              <Right>
+                <Button transparent>
+                  <Text>Detail</Text>
+                </Button>
+              </Right>
+            </ListItem>
+            <ListItem thumbnail>
+              <Left>
+                <Thumbnail
+                  style={{width: 45, borderRadius: 3}}
+                  square
+                  source={{uri: 'https://placeimg.com/140/140/any'}}
+                />
+              </Left>
+              <Body>
+                <Text>Buku pengetahuan</Text>
+                <Text note numberOfLines={1}>
+                  25 terjual
+                </Text>
+              </Body>
+              <Right>
+                <Button transparent>
+                  <Text>Detail</Text>
+                </Button>
+              </Right>
             </ListItem>
             <ListItem thumbnail>
               <Left>

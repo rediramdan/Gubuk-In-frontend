@@ -31,6 +31,7 @@ import {
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
+import HeaderComponent from '../components/HeaderComponent'
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -87,20 +88,7 @@ const styles = StyleSheet.create({
 const Profile = ({navigation}) => {
   return (
     <Container>
-      <Header style={styles.header} androidStatusBarColor={'#2469EF'}>
-        <Left style={{paddingLeft: 10}}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-            }}>
-            <IconM name="arrow-left" size={21} color={'white'} />
-          </TouchableOpacity>
-        </Left>
-        <Body>
-          <Title style={styles.brand}>Profile</Title>
-        </Body>
-        <Right />
-      </Header>
+      <HeaderComponent navigation={navigation} title={'Profil'} back={true} />
       <Content>
         <View style={{paddingTop: 20}}>
           <View style={{alignItems: 'center'}}>

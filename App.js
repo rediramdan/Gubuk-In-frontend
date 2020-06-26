@@ -12,6 +12,8 @@ import Search from './src/screens/Search';
 import Beranda from './src/screens/Beranda';
 import BukuSaya from './src/screens/BukuSaya';
 import Koleksi from './src/screens/Koleksi';
+import AddBook from './src/screens/AddBook';
+import AddImage from './src/screens/AddImage';
 import Profile from './src/screens/Profile';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
@@ -104,12 +106,14 @@ const App = () => {
         initialRouteName="Splash">
         <Screen name="Splash" component={Splash} />
         <Screen name="ShowPdf" component={ShowPdf} />
+        <Screen name="AddBook" component={AddBook} />
         <Screen name="Landing" component={Landing} />
         <Screen name="Home" component={BottomTab} />
         <Screen name="Search" component={Search} />
         <Screen name="Profile" component={Profile} />
         <Screen name="Login" component={Login} />
         <Screen name="Register" component={Register} />
+        <Screen name="AddImage" component={AddImage} />
       </Navigator>
     </NavigationContainer>
   );
