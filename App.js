@@ -107,7 +107,7 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Verify">
+        initialRouteName="ChangeProfile">
         <Screen name="Splash" component={Splash} />
         <Screen name="ShowPdf" component={ShowPdf} />
         <Screen name="AddBook" component={AddBook} />
