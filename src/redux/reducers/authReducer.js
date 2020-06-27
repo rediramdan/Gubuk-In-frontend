@@ -23,6 +23,10 @@ const book = (prevState = initialValue, action) => {
       return {
         ...prevState,
         isLogin: false,
+        token: '',
+        refreshtoken: '',
+        email: '',
+        user: {},
       };
     default:
       return {

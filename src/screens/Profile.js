@@ -28,7 +28,10 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import AsyncStorage from '@react-native-community/async-storage';
+import {connect} from 'react-redux';
+import {removeAuthCreator} from '../redux/actions/authAction'
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
 import HeaderComponent from '../components/HeaderComponent'
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Profile = ({navigation}) => {
+const Profile = ({navigation, removeAuth}) => {
   return (
     <Container>
       <HeaderComponent navigation={navigation} title={'Profil'} back={true} />
@@ -158,7 +161,9 @@ const Profile = ({navigation}) => {
                           },
                           {
                             text: 'Iya',
-                            onPress: () => {
+                            onPress: async () => {
+                              await AsyncStorage.clear()
+                              removeAuth();
                               navigation.navigate('Login');
                             },
                           },
@@ -181,4 +186,13 @@ const Profile = ({navigation}) => {
   );
 };
 
-export default Profile;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeAuth: (body) => {
+      dispatch(removeAuthCreator());
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Profile);
