@@ -24,6 +24,7 @@ import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
 import HeaderComponent from '../components/HeaderComponent';
+import BookItem from '../components/BookItem';
 
 import {connect} from 'react-redux';
 
@@ -46,7 +47,8 @@ const styles = StyleSheet.create({
     minHeight: 170,
   },
   textBanner1: {
-    fontSize: 18,
+    fontSize: 15,
+    fontFamily: 'Comfortaa-Bold',
     color: 'white',
   },
   textBanner: {
@@ -79,16 +81,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const Home = ({navigation, booksPremium}) => {
-  useEffect(()=>{
-    console.log(booksPremium)
-  })
+const Home = ({navigation, booksPremium, auth}) => {
+  useEffect(() => {
+    console.log(auth);
+  });
   return (
     <Container>
       <HeaderComponent
         navigation={navigation}
         title={'Gubuk-In'}
-        icon={'bookmark-multiple'}
+        icon={''}
       />
       <Content>
         <View style={styles.banner}>
@@ -132,17 +134,54 @@ const Home = ({navigation, booksPremium}) => {
             style={{width: width, paddingHorizontal: 15}}
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={[1, 2, 3, 4]}
+            data={booksPremium.data}
             renderItem={({item}) => (
-              <View
-                style={{
-                  width: 110,
-                  height: 160,
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  borderRadius: 5,
-                  marginRight: 15,
-                }}
-              />
+              <View style={{width: 110, minHeight: 160, marginRight: 15, alignItems: 'flex-start'}}>
+                <Thumbnail
+                  square
+                  style={{
+                    width: 110,
+                    height: 160,
+                    borderRadius: 5,
+                  }}
+                  source={{
+                    uri: 'http://3.92.162.78:8080/image/' + item.image,
+                  }}
+                />
+                <View style={{marginTop: -40,
+                paddingBottom:4,
+                borderBottomLeftRadius:4,
+                borderBottomRightRadius:4,
+                      marginBottom: 10, width:'100%', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                  <Text
+                    style={{
+                      marginLeft: 5,
+                      color: 'rgba(0,0,0,0.7)',
+                      fontSize: 14,
+                      color: 'white',
+                    }}>
+                    Ilmu pengeta...
+                  </Text>
+                  <Text
+                    style={{
+                      marginLeft: 5,
+                      color: 'rgba(0,0,0,0.7)',
+                      fontSize: 12,
+                      color: 'white',
+                    }}>
+                    3 / 5
+                  </Text>
+                </View>
+                  <Rating
+                    readonly={true}
+                    ratingCount={5}
+                    startingValue={3}
+                    showRating={false}
+                    imageSize={16}
+                    style={{marginLeft:2}}
+                    ratingBackgroundColor='#c8c7c8'
+                  />
+              </View>
             )}
             keyExtractor={(item) => item.toString()}
           />
@@ -160,41 +199,7 @@ const Home = ({navigation, booksPremium}) => {
               activeTextStyle={{color: 'black'}}>
               <View style={{paddingTop: 20}}>
                 {booksPremium.data.map((book) => {
-                  return (
-                    <TouchableOpacity onPress={() => {}}>
-                      <CardItem style={styles.carditem}>
-                        <Left style={styles.left}>
-                          <Thumbnail
-                            square
-                            style={styles.thumb}
-                            source={{
-                              uri: 'http://3.92.162.78:8080/image/'+book.image,
-                            }}
-                          />
-                          <Body>
-                            <Text numberOfLines={2}>
-                              {book.title}
-                            </Text>
-                            <Text note numberOfLines={1}>
-                              Rp. {book.price}
-                            </Text>
-                            <Text note>Ilmu pengetahuan</Text>
-                            <View style={{alignItems: 'flex-start'}}>
-                              <Rating
-                                readonly={true}
-                                ratingCount={5}
-                                startingValue={0}
-                                showRating={false}
-                                imageSize={16}
-                                style={{paddingVertical: 10}}
-                              />
-                              <Text style={{color: 'rgba(0,0,0,0.4)', fontSize: 12, marginTop:-8}}>0 / 5</Text>
-                            </View>
-                          </Body>
-                        </Left>
-                      </CardItem>
-                    </TouchableOpacity>
-                  );
+                  return <BookItem book={book} />;
                 })}
               </View>
             </Tab>
@@ -205,70 +210,9 @@ const Home = ({navigation, booksPremium}) => {
               textStyle={{color: 'black'}}
               activeTextStyle={{color: 'black'}}>
               <View style={{paddingTop: 20}}>
-                <TouchableOpacity onPress={() => {}}>
-                  <CardItem style={styles.carditem}>
-                    <Left style={styles.left}>
-                      <Thumbnail
-                        square
-                        style={styles.thumb}
-                        source={{
-                          uri: 'https://placeimg.com/140/140/any',
-                        }}
-                      />
-                      <Body>
-                        <Text numberOfLines={2}>
-                          Ilmu Pengetahuan Alam kelas XII SMA
-                        </Text>
-                        <Text note numberOfLines={1}>
-                          Redi ramdan
-                        </Text>
-                        <Text note>Ilmu pengetahuan</Text>
-                        <View style={{alignItems: 'flex-start'}}>
-                          <Rating
-                            readonly={true}
-                            ratingCount={5}
-                            startingValue={3.5}
-                            showRating={false}
-                            imageSize={20}
-                            style={{paddingVertical: 10}}
-                          />
-                        </View>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {}}>
-                  <CardItem style={styles.carditem}>
-                    <Left style={styles.left}>
-                      <Thumbnail
-                        square
-                        style={styles.thumb}
-                        source={{
-                          uri: 'https://placeimg.com/140/140/any',
-                        }}
-                      />
-                      <Body>
-                        <Text numberOfLines={2}>
-                          Ilmu Pengetahuan Alam kelas XII SMA
-                        </Text>
-                        <Text note numberOfLines={1}>
-                          Redi ramdan
-                        </Text>
-                        <Text note>Ilmu pengetahuan</Text>
-                        <View style={{alignItems: 'flex-start'}}>
-                          <Rating
-                            readonly={true}
-                            ratingCount={5}
-                            startingValue={3.5}
-                            showRating={false}
-                            imageSize={20}
-                            style={{paddingVertical: 10}}
-                          />
-                        </View>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                </TouchableOpacity>
+                {booksPremium.data.map((book) => {
+                  return <BookItem book={book} />;
+                })}
               </View>
             </Tab>
           </Tabs>
@@ -278,10 +222,11 @@ const Home = ({navigation, booksPremium}) => {
   );
 };
 
-const mapStateToProps = ({book}) => {
+const mapStateToProps = ({book, auth}) => {
   const {booksPremium} = book;
   return {
     booksPremium,
+    auth,
   };
 };
 

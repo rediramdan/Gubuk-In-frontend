@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Header, Left, Body, Title, Right, Thumbnail} from 'native-base';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
+
 const styles = StyleSheet.create({
   brand: {
     marginLeft: -25,
@@ -14,6 +16,8 @@ const styles = StyleSheet.create({
   },
 });
 const HeaderComponent = ({navigation, title, icon, back = false}) => {
+  const islogin = useSelector((state) => state.auth.isLogin);
+  const image = useSelector((state) => state.auth.user.image_profile);
   return (
     <Header style={styles.header} androidStatusBarColor={'#2469EF'}>
       {back ? (
@@ -32,22 +36,47 @@ const HeaderComponent = ({navigation, title, icon, back = false}) => {
       )}
 
       <Body>
-        <Title style={styles.brand}>{title}</Title>
+        <Title
+          style={[
+            styles.brand,
+            {
+              marginLeft: icon === '' ? -55 : -25,
+              fontFamily: icon === '' ? 'Comfortaa-Bold' : 'arial',
+            },
+          ]}>
+          {title}
+        </Title>
       </Body>
-      {!back ? <Right>
-        <TouchableOpacity
-          style={{marginRight: 10}}
-          onPress={() => {
-            navigation.navigate('Profile');
-          }}>
-          <Thumbnail
-            style={{width: 35, height: 35}}
-            source={{
-              uri: 'https://placeimg.com/140/140/any',
-            }}
-          />
-        </TouchableOpacity>
-      </Right> : <Right />}
+      {!back ? (
+        islogin ? (
+          <Right>
+            <TouchableOpacity
+              style={{marginRight: 10}}
+              onPress={() => {
+                navigation.navigate('Profile');
+              }}>
+              <Thumbnail
+                style={{width: 35, height: 35}}
+                source={{
+                  uri: image,
+                }}
+              />
+            </TouchableOpacity>
+          </Right>
+        ) : (
+          <Right>
+            <TouchableOpacity
+              style={{marginRight: 10}}
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
+            <IconM name="login" size={21} color={'white'} />
+            </TouchableOpacity>
+          </Right>
+        )
+      ) : (
+        <Right />
+      )}
     </Header>
   );
 };

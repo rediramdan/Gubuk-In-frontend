@@ -25,14 +25,18 @@ import VerifyEmail from './src/screens/VerifyEmail';
 import ChangePassword from './src/screens/ChangePassword';
 import ChangeProfile from './src/screens/ChangeProfile';
 
+import { useSelector } from 'react-redux'
+
 const Tab = createBottomTabNavigator();
 const {Navigator, Screen} = createStackNavigator();
 const BottomTab = () => {
-  const style = {style: {paddingBottom: 5, paddingTop: 5}};
+  const islogin = useSelector(state => state.auth.isLogin);
+  const style = {style: {paddingBottom: islogin?5:0, paddingTop: islogin?5:0}};
   return (
     <Tab.Navigator
       initialRouteName="Home"
       shifting={true}
+      screenOptions={{tabBarVisible: islogin}}
       tabBarOptions={style}>
       <Tab.Screen
         name="Home"
@@ -61,7 +65,7 @@ const BottomTab = () => {
           tabBarIcon: ({focused}) => {
             const color = focused ? '#5E94FF' : 'rgba(0,0,0,0.2)';
             return (
-              <Icon style={{color: color, fontSize: 25}} name="book-multiple" />
+              <Icon style={{color: color, fontSize: 25}} name={'book-multiple'} />
             );
           },
         }}

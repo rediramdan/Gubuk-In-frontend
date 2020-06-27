@@ -1,6 +1,8 @@
 import React from 'react';
-import {Container, Content, Text, Item, Input, Button, Icon} from 'native-base';
+import {Container, Content, Text, Item, Input, Button, Icon, Spinner} from 'native-base';
 import {View, Dimensions, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import {postRegister} from '../utils/http';
 const {width, height} = Dimensions.get('window');
 class Register extends React.Component {
   state = {
@@ -23,6 +25,12 @@ class Register extends React.Component {
     });
   };
 
+  setLoading = (val) => {
+    this.setState({
+      isLoading: val,
+    });
+  };
+
   onChange = (val, name) => {
     const key = name;
     const error = key + 'Error';
@@ -31,6 +39,18 @@ class Register extends React.Component {
       this.setState({
         [error]: false,
       });
+      if (name === 'email') {
+        if (
+          !val.match(
+            /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+          )
+        ) {
+          this.setState({
+            [error]: true,
+            [message]: 'Emal tidak valid',
+          });
+        }
+      }
     } else {
       this.setState({
         [error]: true,
@@ -40,6 +60,25 @@ class Register extends React.Component {
     this.setState({
       [key]: val,
     });
+  };
+
+  onSubmit = async () => {
+    const {
+      name,
+      email,
+      password,
+      emailError,
+      nameError,
+      passwordError,
+    } = this.state;
+    if (!nameError && !emailError && !passwordError) {
+      this.setLoading(true);
+      await postRegister({name, email, password}).then(async (res) => {
+        await AsyncStorage.setItem('_email', email);
+        this.setLoading(false);
+        this.props.navigation.navigate('Verify');
+      });
+    }
   };
 
   render() {
@@ -61,7 +100,12 @@ class Register extends React.Component {
         <Content style={{backgroundColor: '#5E94FF'}}>
           <View style={{height: height - 25, justifyContent: 'center'}}>
             <View style={{alignItems: 'center'}}>
-              <Text style={{color: 'white', fontSize: 26, fontWeight: 'bold'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 26,
+                  fontFamily: 'Comfortaa-Bold',
+                }}>
                 Gubuk-In
               </Text>
               <Text style={{color: 'white', fontSize: 18, marginBottom: 20}}>
@@ -163,15 +207,20 @@ class Register extends React.Component {
                   {passwordMessage}
                 </Text>
               ) : null}
-              <Button
-                style={{
-                  justifyContent: 'center',
-                  marginTop: 20,
-                  backgroundColor: '#2469EF',
-                  borderRadius: 12,
-                }}>
-                <Text>Register</Text>
-              </Button>
+              {isLoading ? (
+                <Spinner color="white" />
+              ) : (
+                <Button
+                  style={{
+                    justifyContent: 'center',
+                    marginTop: 20,
+                    backgroundColor: '#2469EF',
+                    borderRadius: 12,
+                  }}
+                  onPress={()=>{this.onSubmit()}}>
+                  <Text>Register</Text>
+                </Button>
+              )}
               <Text
                 style={{
                   justifyContent: 'center',
@@ -179,7 +228,7 @@ class Register extends React.Component {
                   textAlign: 'center',
                   marginTop: 20,
                 }}>
-                Udah punya akun ?
+                Sudah punya akun ?
               </Text>
               <TouchableOpacity
                 onPress={() => {

@@ -115,7 +115,7 @@ const BukuSaya = ({navigation}) => {
                 Storage
               </Text>
               <Text style={{fontSize: 10, color: 'white', marginBottom:2}}>0,9 MB / 10MB</Text>
-              <Progress.Bar progress={0.5} width={120} color="white" />
+              <Progress.Bar progress={0.5} width={140} color="white" />
             </View>
           </View>
         </View>
