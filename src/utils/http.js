@@ -31,3 +31,11 @@ export const postVerify = body => {
   return axios.post(`${BASE_URL}/auth/verify`, qs.stringify(body));
 };
 
+
+export const postBooksAll = body => {
+  return axios.post(`${BASE_URL}/books`, qs.stringify(body));
+};
+
+export const postForgot = body => {
+  return axios.post(`${BASE_URL}/auth/forgot`, qs.stringify(body));
+};

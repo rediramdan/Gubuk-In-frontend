@@ -23,6 +23,7 @@ import Landing from './src/screens/Landing';
 import ShowPdf from './src/screens/ShowPdf';
 import Verify from './src/screens/Verify';
 import VerifyEmail from './src/screens/VerifyEmail';
+import Forgot from './src/screens/Forgot';
 import ChangePassword from './src/screens/ChangePassword';
 import ChangeProfile from './src/screens/ChangeProfile';
 
@@ -100,8 +101,9 @@ const App = () => {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName="Splash">
+          initialRouteName="Forgot">
           <Screen name="Splash" component={Splash} />
+          <Screen name="BukuSaya" component={BukuSaya} />
           <Screen name="ShowPdf" component={ShowPdf} />
           <Screen name="AddBook" component={AddBook} />
           <Screen name="Landing" component={Landing} />
@@ -114,6 +116,7 @@ const App = () => {
           <Screen name="Verify" component={Verify} />
           <Screen name="Detail" component={Detail} />
           <Screen name="VerifyEmail" component={VerifyEmail} />
+          <Screen name="Forgot" component={Forgot} />
           <Screen name="ChangePassword" component={ChangePassword} />
           <Screen name="ChangeProfile" component={ChangeProfile} />
         </Navigator>

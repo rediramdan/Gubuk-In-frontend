@@ -1,6 +1,7 @@
 import {
   addPremiumBooksType,
   addFreeBooksType,
+  addBooksType,
   searchFreeBooksType,
   searchPremiumBooksType,
 } from './actionType';
@@ -19,6 +20,7 @@ export const addFreeBooksCreator = (body) => {
   };
 };
 
+
 export const searchPremiumBooksCreator = (body) => {
   return {
     type: searchPremiumBooksType,
@@ -32,3 +34,13 @@ export const searchFreeBooksCreator = (body) => {
     value: body,
   };
 };
+
+
+export const  addBooksCreator = (body) => {
+  return {
+    type:  addBooksType,
+    value: body,
+  };
+};
+
+
