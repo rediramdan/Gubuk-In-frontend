@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const BookItem = ({book}) => {
+const BookItem = ({book, navigation}) => {
   return (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity onPress={() => {navigation.navigate('Detail', {book})}}>
       <CardItem style={styles.carditem}>
         <Left style={styles.left}>
           <Thumbnail
@@ -49,17 +49,17 @@ const BookItem = ({book}) => {
             <Text note numberOfLines={1}>
               Rp. {book.price}
             </Text>
-            <Text note>Ilmu pengetahuan</Text>
+          <Text note>{book.category}</Text>
             <View style={styles.wrapperRating}>
               <Rating
                 readonly={true}
                 ratingCount={5}
-                startingValue={0}
+                startingValue={book.rating}
                 showRating={false}
                 imageSize={16}
                 style={styles.rating}
               />
-              <Text style={styles.textRating}>0 / 5</Text>
+              <Text style={styles.textRating}>{book.rating}/5</Text>
             </View>
           </Body>
         </Left>

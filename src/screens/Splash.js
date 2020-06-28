@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {getAllBooks} from '../utils/http';
-import {addBooksCreator} from '../redux/actions/bookAction';
+import {getPremiumBooks, getFreeBooks} from '../utils/http';
+import {addPremiumBooksCreator, addFreeBooksCreator} from '../redux/actions/bookAction';
 import {addAuthCreator, removeAuthCreator} from '../redux/actions/authAction';
 
 const styles = StyleSheet.create({
@@ -28,28 +28,33 @@ const styles = StyleSheet.create({
   },
 });
 
-const Splash = ({navigation, addBooks, addAuth, removeAuth}) => {
+const Splash = ({navigation, addPremiumBooks, addFreeBooks, addAuth, removeAuth}) => {
   useEffect( async () => {
     const email = await AsyncStorage.getItem('_email');
     const user = await AsyncStorage.getItem('_user');
-    await getAllBooks().then((response) => {
-      addBooks(response.data);
-      if(email !== null){
-        if(email === 'verified'){
-          if(user !== null){
-            const userVal = JSON.parse(user);
-            const {token, email, refreshToken} = userVal
-            addAuth({token, email, refreshToken, user:userVal})
-            navigation.navigate('Home');
+    await getPremiumBooks().then( async (response) => {
+      addPremiumBooks(response.data);
+      await getFreeBooks().then((res)=>{
+        addFreeBooks(res.data);
+        if(email !== null){
+          if(email === 'verified'){
+            if(user !== null){
+              const userVal = JSON.parse(user);
+              const {token, email, refreshToken} = userVal
+              addAuth({token, email, refreshToken, user:userVal})
+              navigation.navigate('Home');
+            }else{
+              navigation.navigate('Login');
+            }
           }else{
-            navigation.navigate('Login');
+            navigation.navigate('Verify');
           }
         }else{
-          navigation.navigate('Verify');
+          navigation.navigate('Landing');
         }
-      }else{
-        navigation.navigate('Landing');
-      }
+      }).catch((e)=>{
+        console.log(e);
+      })
     }).catch((e)=>{
       console.log(e);
     });
@@ -67,8 +72,11 @@ const Splash = ({navigation, addBooks, addAuth, removeAuth}) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBooks: (body) => {
-      dispatch(addBooksCreator(body));
+    addPremiumBooks: (body) => {
+      dispatch(addPremiumBooksCreator(body));
+    },
+    addFreeBooks: (body) => {
+      dispatch(addFreeBooksCreator(body));
     },
     addAuth: (body) => {
       dispatch(addAuthCreator(body));

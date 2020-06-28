@@ -3,8 +3,20 @@ import qs from 'qs';
 
 const BASE_URL = 'http://3.92.162.78:8080';
 
-export const getAllBooks = () => {
-  return axios.get(`${BASE_URL}/books`);
+export const getPremiumBooks = () => {
+  return axios.get(`${BASE_URL}/books?price=premium&status=accepted`);
+};
+
+export const searchPremiumBooks = (val) => {
+  return axios.get(`${BASE_URL}/books?price=premium&status=accepted&search=${val}`);
+};
+
+export const getFreeBooks = () => {
+  return axios.get(`${BASE_URL}/books?price=free&status=accepted`);
+};
+
+export const searchFreeBooks = (val) => {
+  return axios.get(`${BASE_URL}/books?price=free&status=accepted&search=${val}`);
 };
 
 export const postLogin = body => {

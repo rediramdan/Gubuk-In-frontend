@@ -27,6 +27,7 @@ import HeaderComponent from '../components/HeaderComponent';
 import BookItem from '../components/BookItem';
 
 import {connect} from 'react-redux';
+import book from '../redux/reducers/bookReducer';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -81,21 +82,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const Home = ({navigation, booksPremium, auth}) => {
+const Home = ({navigation, booksPremium, booksFree, auth}) => {
   useEffect(() => {
     console.log(auth);
   });
   return (
     <Container>
-      <HeaderComponent
-        navigation={navigation}
-        title={'Gubuk-In'}
-        icon={''}
-      />
+      <HeaderComponent navigation={navigation} title={'Gubuk-In'} icon={''} />
       <Content>
         <View style={styles.banner}>
           <Text style={styles.textBanner1}>Selamat datang</Text>
-          <Text style={styles.textBanner}>Redi ramdan</Text>
+          <Text style={styles.textBanner}>{auth.user.name || "Di Gubuk-In"}</Text>
           <Thumbnail
             style={styles.avatarBanner}
             source={require('../images/bg.png')}
@@ -131,12 +128,19 @@ const Home = ({navigation, booksPremium, auth}) => {
           }}>
           <Text style={{marginLeft: 23, marginBottom: 10}}>Terbaru</Text>
           <FlatList
-            style={{width: width, paddingHorizontal: 15}}
+            style={{width: width, paddingHorizontal: 25}}
             horizontal
             showsHorizontalScrollIndicator={false}
             data={booksPremium.data}
             renderItem={({item}) => (
-              <View style={{width: 110, minHeight: 160, marginRight: 15, alignItems: 'flex-start'}}>
+              <TouchableOpacity
+                style={{
+                  width: 110,
+                  minHeight: 160,
+                  marginRight: 15,
+                  alignItems: 'flex-start',
+                }}
+                onPress={()=>{navigation.navigate('Detail', {book: item})}}>
                 <Thumbnail
                   square
                   style={{
@@ -148,40 +152,46 @@ const Home = ({navigation, booksPremium, auth}) => {
                     uri: 'http://3.92.162.78:8080/image/' + item.image,
                   }}
                 />
-                <View style={{marginTop: -40,
-                paddingBottom:4,
-                borderBottomLeftRadius:4,
-                borderBottomRightRadius:4,
-                      marginBottom: 10, width:'100%', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                <View
+                  style={{
+                    marginTop: -40,
+                    paddingBottom: 4,
+                    borderBottomLeftRadius: 4,
+                    borderBottomRightRadius: 4,
+                    marginBottom: 10,
+                    width: '100%',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                  }}>
                   <Text
                     style={{
                       marginLeft: 5,
                       color: 'rgba(0,0,0,0.7)',
-                      fontSize: 14,
+                      fontSize: 15,
                       color: 'white',
-                    }}>
-                    Ilmu pengeta...
+                    }}
+                    numberOfLines={1}>
+                    {item.title}
                   </Text>
                   <Text
                     style={{
                       marginLeft: 5,
                       color: 'rgba(0,0,0,0.7)',
-                      fontSize: 12,
+                      fontSize: 11,
                       color: 'white',
                     }}>
-                    3 / 5
+                    {item.rating}/5
                   </Text>
                 </View>
-                  <Rating
-                    readonly={true}
-                    ratingCount={5}
-                    startingValue={3}
-                    showRating={false}
-                    imageSize={16}
-                    style={{marginLeft:2}}
-                    ratingBackgroundColor='#c8c7c8'
-                  />
-              </View>
+                <Rating
+                  readonly={true}
+                  ratingCount={5}
+                  startingValue={item.rating}
+                  showRating={false}
+                  imageSize={16}
+                  style={{marginLeft: 2}}
+                  ratingBackgroundColor="#c8c7c8"
+                />
+              </TouchableOpacity>
             )}
             keyExtractor={(item) => item.toString()}
           />
@@ -198,8 +208,8 @@ const Home = ({navigation, booksPremium, auth}) => {
               textStyle={{color: 'black'}}
               activeTextStyle={{color: 'black'}}>
               <View style={{paddingTop: 20}}>
-                {booksPremium.data.map((book) => {
-                  return <BookItem book={book} />;
+                {booksFree.data.map((book) => {
+                  return <BookItem book={book} navigation={navigation} />;
                 })}
               </View>
             </Tab>
@@ -211,7 +221,7 @@ const Home = ({navigation, booksPremium, auth}) => {
               activeTextStyle={{color: 'black'}}>
               <View style={{paddingTop: 20}}>
                 {booksPremium.data.map((book) => {
-                  return <BookItem book={book} />;
+                  return <BookItem book={book} navigation={navigation} />;
                 })}
               </View>
             </Tab>
@@ -223,9 +233,10 @@ const Home = ({navigation, booksPremium, auth}) => {
 };
 
 const mapStateToProps = ({book, auth}) => {
-  const {booksPremium} = book;
+  const {booksPremium, booksFree} = book;
   return {
     booksPremium,
+    booksFree,
     auth,
   };
 };

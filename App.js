@@ -17,6 +17,7 @@ import AddImage from './src/screens/AddImage';
 import Profile from './src/screens/Profile';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
+import Detail from './src/screens/Detail';
 import Splash from './src/screens/Splash';
 import Landing from './src/screens/Landing';
 import ShowPdf from './src/screens/ShowPdf';
@@ -111,6 +112,7 @@ const App = () => {
           <Screen name="Register" component={Register} />
           <Screen name="AddImage" component={AddImage} />
           <Screen name="Verify" component={Verify} />
+          <Screen name="Detail" component={Detail} />
           <Screen name="VerifyEmail" component={VerifyEmail} />
           <Screen name="ChangePassword" component={ChangePassword} />
           <Screen name="ChangeProfile" component={ChangeProfile} />

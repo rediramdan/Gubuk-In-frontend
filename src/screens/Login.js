@@ -70,7 +70,7 @@ class Login extends React.Component {
             ToastAndroid.SHORT,
             ToastAndroid.TOP
           );
-          console.log('ERROR', e);
+          console.log('ERROR', {e});
         });
     }
   };

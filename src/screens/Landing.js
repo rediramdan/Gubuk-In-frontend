@@ -101,17 +101,7 @@ export default class Landing extends Component {
     this.props.navigation.navigate('Home');
   }
   render() {
-    if (this.state.showRealApp) {
-      return <View style={styles.container}>
-        <Text style= {styles.text}>
-          You are Home!!
-        </Text>
-
-
-      </View>;
-    } else {
       return <AppIntroSlider renderItem={this._renderItem} data={slides} onDone={this._onDone}  showSkipButton/>;       
-    }
   }
 }
 

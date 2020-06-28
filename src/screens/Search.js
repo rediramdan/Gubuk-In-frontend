@@ -18,11 +18,21 @@ import {
   ScrollableTab,
   Text,
   Thumbnail,
+  Spinner,
 } from 'native-base';
 import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
+import {connect} from 'react-redux';
+import {
+  searchFreeBooksCreator,
+  searchPremiumBooksCreator,
+} from '../redux/actions/bookAction';
+
+import BookItem from '../components/BookItem';
+
+import { searchPremiumBooks, searchFreeBooks } from '../utils/http';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -76,16 +86,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const Search = ({navigation}) => {
+
+const Search = ({navigation, searchFreeBooksAction, searchPremiumBooksAction, searchResult}) => {
+  const [isLoadingP, setLoadingP] = React.useState(false);
+  const [isLoadingF, setLoadingF] = React.useState(false);
+  const onSubmit = async (val) => {
+    setLoadingP(true);
+    setLoadingF(true);
+    await searchFreeBooks(val).then((response) => {
+      searchFreeBooksAction(response.data.data)
+      setLoadingF(false)
+    }).catch((e)=>{
+      setLoadingF(false)
+      console.log(e)
+    })
+    await searchPremiumBooks(val).then((response) => {
+      searchPremiumBooksAction(response.data.data)
+      setLoadingP(false)
+    }).catch((e)=>{
+      setLoadingP(false)
+      console.log(e)
+    })
+  }
   return (
     <Container>
       <Header style={styles.header} androidStatusBarColor={'#2469EF'}>
         <Left>
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                 <IconM name="arrow-left" size={24} color={'white'} />
-            </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <IconM name="arrow-left" size={24} color={'white'} />
+          </TouchableOpacity>
         </Left>
-        <Body style={{marginLeft:-80}}>
+        <Body style={{marginLeft: -80}}>
           <Item
             style={{
               backgroundColor: 'rgba(255,255,255,0.9)',
@@ -95,10 +129,9 @@ const Search = ({navigation}) => {
               width: '100%',
             }}>
             <Input
-              autoFocus
-              onTouchStart={(e) => {
-                e.preventDefault();
-                navigation.navigate('Search');
+              autoFocus={true}
+              onSubmitEditing={(e)=>{
+                onSubmit(e.nativeEvent.text)
               }}
               style={{fontSize: 15}}
               placeholder="Cari buku "
@@ -119,70 +152,10 @@ const Search = ({navigation}) => {
               textStyle={{color: 'black'}}
               activeTextStyle={{color: 'black'}}>
               <View style={{paddingTop: 20}}>
-                <TouchableOpacity onPress={() => {}}>
-                  <CardItem style={styles.carditem}>
-                    <Left style={styles.left}>
-                      <Thumbnail
-                        square
-                        style={styles.thumb}
-                        source={{
-                          uri: 'https://placeimg.com/140/140/any',
-                        }}
-                      />
-                      <Body>
-                        <Text numberOfLines={2}>
-                          Ilmu Pengetahuan Alam kelas XII SMA
-                        </Text>
-                        <Text note numberOfLines={1}>
-                          Redi ramdan
-                        </Text>
-                        <Text note>Ilmu pengetahuan</Text>
-                        <View style={{alignItems: 'flex-start'}}>
-                          <Rating
-                            readonly={true}
-                            ratingCount={5}
-                            startingValue={3.5}
-                            showRating={false}
-                            imageSize={20}
-                            style={{paddingVertical: 10}}
-                          />
-                        </View>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {}}>
-                  <CardItem style={styles.carditem}>
-                    <Left style={styles.left}>
-                      <Thumbnail
-                        square
-                        style={styles.thumb}
-                        source={{
-                          uri: 'https://placeimg.com/140/140/any',
-                        }}
-                      />
-                      <Body>
-                        <Text numberOfLines={2}>
-                          Ilmu Pengetahuan Alam kelas XII SMA
-                        </Text>
-                        <Text note numberOfLines={1}>
-                          Redi ramdan
-                        </Text>
-                        <Text note>Ilmu pengetahuan</Text>
-                        <View style={{alignItems: 'flex-start'}}>
-                          <Rating
-                            readonly={true}
-                            ratingCount={5}
-                            startingValue={3.5}
-                            showRating={false}
-                            imageSize={20}
-                            style={{paddingVertical: 10}}
-                          />
-                        </View>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                </TouchableOpacity>
+                {isLoadingF? <Spinner color="#5E94FF" /> : null}
+                {searchResult.bookFree.map((book) => {
+                  return <BookItem book={book} navigation={navigation} />;
+                })}
               </View>
             </Tab>
             <Tab
@@ -192,70 +165,10 @@ const Search = ({navigation}) => {
               textStyle={{color: 'black'}}
               activeTextStyle={{color: 'black'}}>
               <View style={{paddingTop: 20}}>
-                <TouchableOpacity onPress={() => {}}>
-                  <CardItem style={styles.carditem}>
-                    <Left style={styles.left}>
-                      <Thumbnail
-                        square
-                        style={styles.thumb}
-                        source={{
-                          uri: 'https://placeimg.com/140/140/any',
-                        }}
-                      />
-                      <Body>
-                        <Text numberOfLines={2}>
-                          Ilmu Pengetahuan Alam kelas XII SMA
-                        </Text>
-                        <Text note numberOfLines={1}>
-                          Redi ramdan
-                        </Text>
-                        <Text note>Ilmu pengetahuan</Text>
-                        <View style={{alignItems: 'flex-start'}}>
-                          <Rating
-                            readonly={true}
-                            ratingCount={5}
-                            startingValue={3.5}
-                            showRating={false}
-                            imageSize={20}
-                            style={{paddingVertical: 10}}
-                          />
-                        </View>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {}}>
-                  <CardItem style={styles.carditem}>
-                    <Left style={styles.left}>
-                      <Thumbnail
-                        square
-                        style={styles.thumb}
-                        source={{
-                          uri: 'https://placeimg.com/140/140/any',
-                        }}
-                      />
-                      <Body>
-                        <Text numberOfLines={2}>
-                          Ilmu Pengetahuan Alam kelas XII SMA
-                        </Text>
-                        <Text note numberOfLines={1}>
-                          Redi ramdan
-                        </Text>
-                        <Text note>Ilmu pengetahuan</Text>
-                        <View style={{alignItems: 'flex-start'}}>
-                          <Rating
-                            readonly={true}
-                            ratingCount={5}
-                            startingValue={3.5}
-                            showRating={false}
-                            imageSize={20}
-                            style={{paddingVertical: 10}}
-                          />
-                        </View>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                </TouchableOpacity>
+              {isLoadingP? <Spinner color="#5E94FF" /> : null}
+                {searchResult.bookPremium.map((book) => {
+                  return <BookItem book={book} navigation={navigation} />;
+                })}
               </View>
             </Tab>
           </Tabs>
@@ -265,4 +178,22 @@ const Search = ({navigation}) => {
   );
 };
 
-export default Search;
+const mapStateToProps = ({book}) => {
+  const {searchResult} = book;
+  return {
+    searchResult,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    searchPremiumBooksAction: (body) => {
+      dispatch(searchPremiumBooksCreator(body));
+    },
+    searchFreeBooksAction: (body) => {
+      dispatch(searchFreeBooksCreator(body));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

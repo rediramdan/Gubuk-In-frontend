@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Container,
   Header,
@@ -31,10 +31,13 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
-import {removeAuthCreator} from '../redux/actions/authAction'
+import {removeAuthCreator} from '../redux/actions/authAction';
 import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
-import HeaderComponent from '../components/HeaderComponent'
+import HeaderComponent from '../components/HeaderComponent';
+import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import ImagePicker from 'react-native-image-picker';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -88,7 +91,32 @@ const styles = StyleSheet.create({
   },
 });
 
-const Profile = ({navigation, removeAuth}) => {
+const options = {
+  title: 'Pilih Poto Profil',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
+
+const onEditPic = (setSource) => {
+  ImagePicker.showImagePicker(options, (response) => {
+    console.log('Response = ', response);
+  
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    } else if (response.customButton) {
+      console.log('User tapped custom button: ', response.customButton);
+    } else {
+      
+    }
+  });
+}
+
+const Profile = ({navigation, removeAuth, auth}) => {
+  const [source, setSource] = useState(auth.user.image_profile);
   return (
     <Container>
       <HeaderComponent navigation={navigation} title={'Profil'} back={true} />
@@ -103,10 +131,15 @@ const Profile = ({navigation, removeAuth}) => {
                 marginBottom: 10,
               }}
               source={{
-                uri: 'https://placeimg.com/140/140/any',
+                uri: source,
               }}
             />
-            <Text style={{color: 'rgba(0,0,0,0.5)'}}>Redi Ramdan</Text>
+            <TouchableOpacity style={{width:50, height:30, marginTop:-35, marginLeft:90}} onPress={()=>{
+              onEditPic(setSource)
+            }}>
+              <IconM name="square-edit-outline" size={22} color={'rgba(0,0,0,0.3)'} />
+            </TouchableOpacity>
+            <Text style={{color: 'rgba(0,0,0,0.8)'}}>{auth.user.name}</Text>
           </View>
           <View>
             <List>
@@ -114,7 +147,7 @@ const Profile = ({navigation, removeAuth}) => {
                 <Text>DETAIL</Text>
               </ListItem>
               <ListItem>
-                <Text>rediramdan@gmail.com</Text>
+                <Text>{auth.user.email}</Text>
               </ListItem>
               <ListItem>
                 <Left>
@@ -162,7 +195,7 @@ const Profile = ({navigation, removeAuth}) => {
                           {
                             text: 'Iya',
                             onPress: async () => {
-                              await AsyncStorage.clear()
+                              await AsyncStorage.clear();
                               removeAuth();
                               navigation.navigate('Login');
                             },
@@ -186,7 +219,6 @@ const Profile = ({navigation, removeAuth}) => {
   );
 };
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
     removeAuth: (body) => {
@@ -195,4 +227,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Profile);
+const mapStateToProps = ({auth}) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
