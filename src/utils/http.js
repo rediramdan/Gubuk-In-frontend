@@ -3,8 +3,10 @@ import qs from 'qs';
 
 const BASE_URL = 'http://3.92.162.78:8080';
 
+
+
 export const getPremiumBooks = () => {
-  return axios.get(`${BASE_URL}/books?price=premium&status=accepted`);
+  return axios.get(`${BASE_URL}/books?price=premium&status=accepted&search=pecinta`);
 };
 
 export const searchPremiumBooks = (val) => {
@@ -17,6 +19,16 @@ export const getFreeBooks = () => {
 
 export const searchFreeBooks = (val) => {
   return axios.get(`${BASE_URL}/books?price=free&status=accepted&search=${val}`);
+};
+
+export const putUserImageProfile = body => {
+  const {id_user, image_profile, token} = body;
+  return axios.put(`${BASE_URL}/user/${id_user}`, qs.stringify(image_profile), {
+    headers: {
+      Authorization: `${token}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
 };
 
 export const postLogin = body => {

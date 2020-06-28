@@ -36,8 +36,9 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Rating, AirbnbRating} from 'react-native-ratings';
 import HeaderComponent from '../components/HeaderComponent';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import ImagePicker from 'react-native-image-picker';
+
+import {putUserImageProfile} from '../utils/http';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -99,10 +100,8 @@ const options = {
   },
 };
 
-const onEditPic = (setSource) => {
-  ImagePicker.showImagePicker(options, (response) => {
-    console.log('Response = ', response);
-  
+const onEditPic = (auth) => {
+  ImagePicker.showImagePicker(options, async (response) => {
     if (response.didCancel) {
       console.log('User cancelled image picker');
     } else if (response.error) {
@@ -110,7 +109,21 @@ const onEditPic = (setSource) => {
     } else if (response.customButton) {
       console.log('User tapped custom button: ', response.customButton);
     } else {
-      
+
+      var image_profile = new FormData();
+      image_profile.append("file", {
+        name: response.fileName,
+        type: 'image/jpeg/jpg',
+        uri: response.uri, 
+      });
+      const id_user = auth.user.id
+      const {token} = auth
+      console.log({image_profile,id_user,token})
+      await putUserImageProfile({image_profile,id_user,token}).then((ress)=>{
+        console.log(ress)
+      }).catch((e)=>{
+        console.log(e)
+      })
     }
   });
 }
@@ -135,7 +148,7 @@ const Profile = ({navigation, removeAuth, auth}) => {
               }}
             />
             <TouchableOpacity style={{width:50, height:30, marginTop:-35, marginLeft:90}} onPress={()=>{
-              onEditPic(setSource)
+              onEditPic(auth)
             }}>
               <IconM name="square-edit-outline" size={22} color={'rgba(0,0,0,0.3)'} />
             </TouchableOpacity>

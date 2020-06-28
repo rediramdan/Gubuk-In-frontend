@@ -1,33 +1,21 @@
 import React, {useEffect} from 'react';
 import {
   Container,
-  Header,
-  Left,
-  Body,
-  Right,
-  Button,
-  Icon,
   Content,
   Input,
-  TabHeading,
-  Title,
-  CardItem,
   Item,
   Tabs,
   Tab,
-  ScrollableTab,
   Text,
   Thumbnail,
 } from 'native-base';
 import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
-import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlatList} from 'react-native-gesture-handler';
-import {Rating, AirbnbRating} from 'react-native-ratings';
+import {Rating} from 'react-native-ratings';
 import HeaderComponent from '../components/HeaderComponent';
 import BookItem from '../components/BookItem';
 
 import {connect} from 'react-redux';
-import book from '../redux/reducers/bookReducer';
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -83,9 +71,6 @@ const styles = StyleSheet.create({
 });
 
 const Home = ({navigation, booksPremium, booksFree, auth}) => {
-  useEffect(() => {
-    console.log(auth);
-  });
   return (
     <Container>
       <HeaderComponent navigation={navigation} title={'Gubuk-In'} icon={''} />
