@@ -1,6 +1,7 @@
 import {
   addPremiumBooksType,
   addFreeBooksType,
+  addBooksType,
   searchPremiumBooksType,
   searchFreeBooksType,
 } from '../actions/actionType';
@@ -41,6 +42,11 @@ const book = (prevState = initialValue, action) => {
           bookFree: action.value,
           bookPremium: prevState.searchResult.bookPremium
         },
+      };
+    case addBooksType:
+      return {
+        ...prevState,
+        booksFree: action.value,
       };
     default:
       return {

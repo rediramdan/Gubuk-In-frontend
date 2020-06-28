@@ -5674,6 +5674,11 @@ react-native-app-intro-slider@^4.0.4:
   resolved "https://registry.yarnpkg.com/react-native-app-intro-slider/-/react-native-app-intro-slider-4.0.4.tgz#fa5cda7057db62c448ac975ffd2ba0cff94cc8d8"
   integrity sha512-Zkjaol6X3BbZkHUpVDj2LjdidpS6rCgKi0fx80xgGKa0pHxBRd4swWTv2bHnnvu5k1/HXwYk0mY2TbK+2jHl5w==
 
+react-native-document-picker@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-3.5.2.tgz#1888690a0ee2c7fa95160577badfb1d3b5340028"
+  integrity sha512-D3fkcXvqUsRlzCAd8TxbSGG9cU0wTGmSDCI5Z1F6Lf49tfqn1a23PYVw6K4tEqNMZYRZ+GIRrvrm7KQVB0m3Fg==
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
