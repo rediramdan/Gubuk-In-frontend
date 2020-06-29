@@ -139,21 +139,6 @@ class ChangeProfile extends React.Component {
       </Header>
       <Content>
         <View style={{paddingTop: 20}}>
-          <View style={{alignItems: 'center'}}>
-            <Thumbnail
-              style={{
-                width: 90,
-                height: 90,
-                borderRadius: 45,
-                marginBottom: 10,
-              }}
-              source={{
-                uri: 'https://placeimg.com/140/140/any',
-              }}
-            />
-            <IconM name="pencil" size={21} color={'black'} style={{marginLeft: 80}} />
-            <Text style={{color: 'rgba(0,0,0,0.5)'}}>Redi Ramdan</Text>
-          </View>
           <View style={{marginTop: 80}}>
              <View style={{paddingHorizontal: 20,}}>
              

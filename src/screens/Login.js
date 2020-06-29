@@ -168,6 +168,23 @@ class Login extends React.Component {
                   {passwordMessage}
                 </Text>
               ) : null}
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate('Forgot');
+                }}>
+                <Text
+                  style={{
+                    color: 'rgba(0,0,0,0.4)',
+                    fontSize: 14,
+                    marginBottom:-5,
+                    marginTop:5,
+                    textAlign:'right',
+                    marginRight:5,
+                    textDecorationLine: 'underline',
+                  }}>
+                  Lupa password ?
+                </Text>
+              </TouchableOpacity>
               {isLoading ? (
                 <Spinner color="white" />
               ) : (

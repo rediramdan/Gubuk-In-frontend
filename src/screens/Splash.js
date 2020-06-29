@@ -50,7 +50,14 @@ const Splash = ({navigation, addPremiumBooks, addFreeBooks, addAuth, removeAuth}
             navigation.navigate('Verify');
           }
         }else{
-          navigation.navigate('Landing');
+          if(user !== null){
+            const userVal = JSON.parse(user);
+            const {token, email, refreshToken} = userVal
+            addAuth({token, email, refreshToken, user:userVal})
+            navigation.navigate('Home');
+          }else{
+            navigation.navigate('Landing');
+          }
         }
       }).catch((e)=>{
         console.log(e);

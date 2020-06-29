@@ -114,10 +114,10 @@ class AddBook extends React.Component {
       //Handling any exception (If any)
       if (DocumentPicker.isCancel(err)) {
         //If user canceled the document selection
-        alert('Canceled from single doc picker');
+        console.log('Canceled from single doc picker');
       } else {
         //For Unknown Error
-        alert('Unknown Error: ' + JSON.stringify(err));
+        console.log('Unknown Error: ' + JSON.stringify(err));
         throw err;
       }
     }

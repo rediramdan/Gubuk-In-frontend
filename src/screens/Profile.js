@@ -111,14 +111,14 @@ const onEditPic = (auth) => {
     } else {
 
       var image_profile = new FormData();
-      image_profile.append("file", {
+      image_profile.append('image_profile',{
         name: response.fileName,
         type: 'image/jpeg/jpg',
         uri: response.uri, 
       });
       const id_user = auth.user.id
       const {token} = auth
-      console.log({image_profile,id_user,token})
+      console.log(id_user);
       await putUserImageProfile({image_profile,id_user,token}).then((ress)=>{
         console.log(ress)
       }).catch((e)=>{
@@ -144,7 +144,7 @@ const Profile = ({navigation, removeAuth, auth}) => {
                 marginBottom: 10,
               }}
               source={{
-                uri: source,
+                uri: source !== null ? `http://3.92.162.78:8080/imageProfile/${source}` : `https://ui-avatars.com/api/?size=256&name=${auth.user.name}`,
               }}
             />
             <TouchableOpacity style={{width:50, height:30, marginTop:-35, marginLeft:90}} onPress={()=>{
@@ -167,7 +167,13 @@ const Profile = ({navigation, removeAuth, auth}) => {
                   <Text>Ubah profil</Text>
                 </Left>
                 <Right>
-                  <Icon name="arrow-forward" />
+                <TouchableOpacity
+                    onPress={() => {navigation.navigate('ChangeProfile')}}>
+                    <Icon
+                      name="arrow-forward"
+                      style={{width: 50, textAlign: 'right'}}
+                    />
+                  </TouchableOpacity>
                 </Right>
               </ListItem>
               <ListItem>
@@ -175,7 +181,13 @@ const Profile = ({navigation, removeAuth, auth}) => {
                   <Text>Ubah password</Text>
                 </Left>
                 <Right>
-                  <Icon name="arrow-forward" />
+                <TouchableOpacity
+                    onPress={() => {navigation.navigate('ChangePassword')}}>
+                    <Icon
+                      name="arrow-forward"
+                      style={{width: 50, textAlign: 'right'}}
+                    />
+                  </TouchableOpacity>
                 </Right>
               </ListItem>
               <ListItem itemHeader style={{marginBottom: -25, marginTop: 20}}>

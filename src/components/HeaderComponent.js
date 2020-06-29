@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
 const HeaderComponent = ({navigation, title, icon, back = false}) => {
   const islogin = useSelector((state) => state.auth.isLogin);
   const image = useSelector((state) => state.auth.user.image_profile);
+  const name = useSelector((state) => state.auth.user.name);
   return (
     <Header style={styles.header} androidStatusBarColor={'#2469EF'}>
       {back ? (
@@ -58,7 +59,7 @@ const HeaderComponent = ({navigation, title, icon, back = false}) => {
               <Thumbnail
                 style={{width: 35, height: 35}}
                 source={{
-                  uri: image,
+                  uri: image !== null ? `http://3.92.162.78:8080/imageProfile/${image}` : `https://ui-avatars.com/api/?size=256&name=${name}`,
                 }}
               />
             </TouchableOpacity>
